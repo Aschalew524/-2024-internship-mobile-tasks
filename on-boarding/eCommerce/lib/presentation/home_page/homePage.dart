@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -10,7 +8,6 @@ class HomePage extends StatelessWidget {
     String sampleDate = 'July 30, 2024';
 
     return Scaffold(
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -27,9 +24,6 @@ class HomePage extends StatelessWidget {
                     backgroundImage: AssetImage('assets/shoes01.jpg'), // User photo
                   ),
                   const SizedBox(width: 16.0),
-
-
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -53,12 +47,6 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
-
-
-
-
-
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
@@ -85,16 +73,13 @@ class HomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20.0), // Space after row
-
             // Product list
             Expanded(
-              child:
-              GestureDetector(
-                onTap: (){
+              child: GestureDetector(
+                onTap: () {
                   Navigator.pushNamed(context, '/detail');
                   // Navigator.pop(context);
                 },
-
                 child: ListView(
                   children: const [
                     ProductCard(
@@ -125,6 +110,14 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          //print('+ button pressed');
+          Navigator.popAndPushNamed(context, '/add');
+        },
+        child: const Icon(Icons.add),
+        backgroundColor: Colors.blue,
+      ),
     );
   }
 }
@@ -151,7 +144,6 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           SizedBox(
             width: double.infinity,
             child: Image.asset(

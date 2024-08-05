@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'addProductPage/addPage.dart';
-import 'detailsPage/detailsPage.dart';
-import 'home_page/homePage.dart';
-import 'searchProductPage/searchPage.dart';
+import 'presentation/addProductPage/addPage.dart';
+import 'presentation/detailsPage/detailsPage.dart';
+import 'presentation/home_page/homePage.dart';
+import 'presentation/searchProductPage/searchPage.dart';
+
+
 
 
 void main() {

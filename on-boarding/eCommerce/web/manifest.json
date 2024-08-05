@@ -1,6 +1,6 @@
 {
-    "name": "task_7",
-    "short_name": "task_7",
+    "name": "ecommerce",
+    "short_name": "ecommerce",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

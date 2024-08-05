@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-
 class ProductCard extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String subtitle;
   final double price;
   final double rating;
+  final VoidCallback onTap; // Add this line
 
   const ProductCard({
     super.key,
@@ -15,79 +15,83 @@ class ProductCard extends StatelessWidget {
     required this.subtitle,
     required this.price,
     required this.rating,
+    required this.onTap, // Add this line
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 180, // Reduced the height of the image
-            width: double.infinity,
-            child: Image.asset(
-              imageUrl,
-              fit: BoxFit.fitWidth,
+    return GestureDetector(
+      onTap: onTap, // Add this line
+      child: Card(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 180, // Reduced the height of the image
+              width: double.infinity,
+              child: Image.asset(
+                imageUrl,
+                fit: BoxFit.fitWidth,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      style: const TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      subtitle,
-                      style: TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      '\$${price.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 12.0,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(width: 4.0),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          color: Colors.amber,
-                          size: 14.0,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(width: 2.0),
-                        Text(
-                          '($rating)',
-                          style: TextStyle(
-                            fontSize: 12.0,
-                            color: Colors.grey[600],
+                      ),
+                      Text(
+                        subtitle,
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        '\$${price.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 12.0,
+                          color: Colors.black,
+                        ),
+                      ),
+                      const SizedBox(width: 4.0),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 14.0,
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                          const SizedBox(width: 2.0),
+                          Text(
+                            '($rating)',
+                            style: TextStyle(
+                              fontSize: 12.0,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -102,15 +106,19 @@ class searchPage extends StatefulWidget {
 
 class _searchPageState extends State<searchPage> {
   RangeValues _currentRangeValues = const RangeValues(0.0, 100.0);
+  final TextEditingController _categoryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search Product'),
-        // leading: const Icon(Icons.arrow_back),
-        leading: IconButton(onPressed: (){Navigator.pushNamed(context, '/home');},
-          icon: const Icon(Icons.arrow_back),),
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/home'); // Navigate to the home page
+          },
+          icon: const Icon(Icons.arrow_back),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -143,20 +151,28 @@ class _searchPageState extends State<searchPage> {
               ],
             ),
             const SizedBox(height: 16.0),
-            const ProductCard(
+            ProductCard(
               imageUrl: 'assets/shoes01.jpg',
               title: 'Derby Leather Shoes',
               subtitle: "Men's shoes",
               price: 49.99,
               rating: 4.5,
+              onTap: () {
+                // Navigate to the detail page
+                Navigator.pushNamed(context, '/detail');
+              },
             ),
             const SizedBox(height: 4),
-            const ProductCard(
+            ProductCard(
               imageUrl: 'assets/shoes01.jpg',
               title: 'Derby Leather Shoes',
               subtitle: "Men's shoes",
               price: 49.99,
               rating: 4.5,
+              onTap: () {
+                // Navigate to the detail page
+                Navigator.pushNamed(context, '/detail');
+              },
             ),
             const SizedBox(height: 16.0),
             const Text(
@@ -167,11 +183,11 @@ class _searchPageState extends State<searchPage> {
               ),
             ),
             const SizedBox(height: 8.0),
-            Container(
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.grey[300],
-                borderRadius: BorderRadius.circular(4.0),
+            TextField(
+              controller: _categoryController,
+              decoration: const InputDecoration(
+                hintText: 'Enter category',
+                border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 8.0),
@@ -209,10 +225,11 @@ class _searchPageState extends State<searchPage> {
                 padding: EdgeInsets.zero, // Remove the padding
               ),
               child: const Text(
-                'Apply',style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0, // Adjust the font size as needed
-              ),
+                'Apply',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0, // Adjust the font size as needed
+                ),
               ),
             ),
           ],

@@ -1,4 +1,4 @@
-# task_7
+# ecommerce
 
 A new Flutter project.
 
