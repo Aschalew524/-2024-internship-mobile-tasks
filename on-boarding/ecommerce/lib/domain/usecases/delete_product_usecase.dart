@@ -1,17 +1,13 @@
-
 import 'package:dartz/dartz.dart';
 
 import '../../core/error/failure.dart';
-import '../entities/product.dart';
 import '../repositories/product_repository.dart';
 
-class DeleteProduct {
+class DeleteProductUseCase {
   final ProductRepository productRepository;
-  final int id;
+  DeleteProductUseCase(this.productRepository);
 
-  DeleteProduct({required this.productRepository, required this.id});
-
-  Future<Either<Failure, Product>> call() async {
+  Future<Either<Failure, void>> execute(String id) async {
     return await productRepository.deleteProduct(id);
   }
 }

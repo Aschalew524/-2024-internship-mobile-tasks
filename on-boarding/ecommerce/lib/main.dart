@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'presentation/addProductPage/addPage.dart';
-import 'presentation/detailsPage/detailsPage.dart';
-import 'presentation/home_page/homePage.dart';
-import 'presentation/searchProductPage/searchPage.dart';
+import 'presentation/pages/addProductPage.dart';
+import 'presentation/pages/detailsPage.dart';
+import 'presentation/pages/home_page.dart';
+import 'presentation/pages/searchProductPage.dart';
+
 
 
 

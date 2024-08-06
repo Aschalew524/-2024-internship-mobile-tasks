@@ -10,7 +10,7 @@ class GetAllProdcutsUsecase {
 
   GetAllProdcutsUsecase({required this.productRepository});
 
-  Future<Either<Failure, List<Product>>> call() 
+  Future<Either<Failure, List<ProductEntity>>> call() 
   async {
     return await productRepository.getAllProducts();
   }

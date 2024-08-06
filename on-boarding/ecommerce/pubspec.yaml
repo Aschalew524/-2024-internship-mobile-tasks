@@ -42,13 +42,20 @@ dependencies:
   shared_preferences: ^2.3.1
   get_it: ^7.7.0
   flutter_bloc: ^8.1.6
+  rxdart: ^0.27.7
+  internet_connection_checker: ^1.0.0
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  bloc_test: 9.1.7
+  build_runner: ^2.3.3
+  mockito: ^5.3.2
+  mocktail: ^0.3.0
+  
 
-  # The "flutter_lints" package below contains a set of recommended lints to
+  # The "flutter_lints" package below contains a set of recommende  d lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
