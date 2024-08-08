@@ -69,7 +69,7 @@ flutter run
 
 The project structure follows the Clean Architecture principles:
 
-
+**  
 lib/
 ├── data/
 │   ├── datasources/
@@ -86,7 +86,7 @@ lib/
 test/
 ├── data/
 ├── domain/
-└── presentation/
+└── presentation/             **
 
 *** TECHNOLOGIES USED*** 
 
