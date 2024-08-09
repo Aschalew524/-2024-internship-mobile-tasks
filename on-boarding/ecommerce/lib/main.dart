@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const HomePage(),
           '/detail': (context) => ProductDetailsPage(),
           '/add':(context)  =>   const addPage(),
-          '/search':(context)=> const searchPage()
+          '/search':(context)=> const SearchPage()
         },
         title: 'Flutter',
         theme: ThemeData(
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const addPage()
+        home: const HomePage()
     );
   }
 }
