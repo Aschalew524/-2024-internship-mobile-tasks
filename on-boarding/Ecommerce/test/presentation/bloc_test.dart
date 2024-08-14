@@ -18,6 +18,7 @@ void main() {
     late MockGetProductUseCase mockGetProductUseCase;
     late MockUpdateProductUseCase mockUpdateProductUseCase;
     late MockDeleteProductUseCase mockDeleteProductUseCase;
+    late MockInputConvertor mockInputConvertor;
 
     setUp(() {
       mockInsertProductUseCase = MockInsertProductUseCase();
@@ -25,6 +26,7 @@ void main() {
       mockGetProductUseCase = MockGetProductUseCase();
       mockUpdateProductUseCase = MockUpdateProductUseCase();
       mockDeleteProductUseCase = MockDeleteProductUseCase();
+      mockInputConvertor = MockInputConvertor();
 
       productBloc = ProductBloc(
         getAllProductsUsecase: mockGetAllProductsUseCase,
@@ -32,6 +34,7 @@ void main() {
         insertProductUseCase: mockInsertProductUseCase,
         updateProductUseCase: mockUpdateProductUseCase,
         deleteProductUseCase: mockDeleteProductUseCase,
+        input_convertor: mockInputConvertor,
       );
     });
 

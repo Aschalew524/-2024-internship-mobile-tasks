@@ -23,7 +23,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     required this.getProductUseCase,
     required this.insertProductUseCase,
     required this.updateProductUseCase,
-    required this.deleteProductUseCase,
+    required this.deleteProductUseCase, required Object input_convertor,
   }) : super(ProductInitial()) {
     on<GetAllProductsEvent>(_onGetAllProducts);
     on<GetProductEvent>(_onGetProduct);

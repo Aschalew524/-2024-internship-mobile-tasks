@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'injection_container.dart';
 import 'presentation/pages/addProductPage.dart';
 import 'presentation/pages/detailsPage.dart';
 import 'presentation/pages/home_page.dart';
@@ -10,6 +11,8 @@ import 'presentation/pages/searchProductPage.dart';
 
 
 void main() {
+  WidgetsBinding.instance;
+  init();
   runApp(const MyApp());
 }
 

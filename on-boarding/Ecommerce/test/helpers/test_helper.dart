@@ -4,6 +4,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_7/core/error/failure.dart';
+import 'package:task_7/core/util/input_convertor.dart';
 import 'package:task_7/data/data_sources/remote_data_source.dart';
 import 'package:task_7/domain/repositories/product_repository.dart';
 import 'package:task_7/domain/usecases/add_product_usecase.dart';
@@ -22,9 +23,11 @@ import 'package:task_7/domain/usecases/update_product_usecase.dart';
   InsertProductUseCase,
   UpdateProductUseCase,
   DeleteProductUseCase,
+ InputConvertor,
 ], customMocks: [
   MockSpec<http.Client>(as: #MockHttpClient)
 ])
 void main() {}
 
+// ignore: must_be_immutable
 class MockFailure extends Mock implements Failure {}

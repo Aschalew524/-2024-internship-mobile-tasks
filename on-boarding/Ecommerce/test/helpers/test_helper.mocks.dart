@@ -4,17 +4,18 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i7;
-import 'dart:convert' as _i17;
-import 'dart:typed_data' as _i19;
+import 'dart:convert' as _i18;
+import 'dart:typed_data' as _i20;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:http/http.dart' as _i6;
 import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i18;
+import 'package:mockito/src/dummies.dart' as _i19;
 import 'package:shared_preferences/src/shared_preferences_legacy.dart' as _i11;
 import 'package:task_7/core/error/failure.dart' as _i8;
+import 'package:task_7/core/util/input_convertor.dart' as _i17;
 import 'package:task_7/data/data_sources/remote_data_source.dart' as _i10;
 import 'package:task_7/data/models/product_model.dart' as _i3;
 import 'package:task_7/domain/entities/product.dart' as _i9;
@@ -720,6 +721,31 @@ class MockDeleteProductUseCase extends _i1.Mock
       ) as _i7.Future<_i2.Either<_i8.Failure, void>>);
 }
 
+/// A class which mocks [InputConvertor].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockInputConvertor extends _i1.Mock implements _i17.InputConvertor {
+  MockInputConvertor() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i2.Either<_i17.InputError, int> stringToUnsignedInteger(String? str) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #stringToUnsignedInteger,
+          [str],
+        ),
+        returnValue: _FakeEither_0<_i17.InputError, int>(
+          this,
+          Invocation.method(
+            #stringToUnsignedInteger,
+            [str],
+          ),
+        ),
+      ) as _i2.Either<_i17.InputError, int>);
+}
+
 /// A class which mocks [Client].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -775,7 +801,7 @@ class MockHttpClient extends _i1.Mock implements _i6.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i17.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -806,7 +832,7 @@ class MockHttpClient extends _i1.Mock implements _i6.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i17.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -837,7 +863,7 @@ class MockHttpClient extends _i1.Mock implements _i6.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i17.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -868,7 +894,7 @@ class MockHttpClient extends _i1.Mock implements _i6.Client {
     Uri? url, {
     Map<String, String>? headers,
     Object? body,
-    _i17.Encoding? encoding,
+    _i18.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -905,7 +931,7 @@ class MockHttpClient extends _i1.Mock implements _i6.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i7.Future<String>.value(_i18.dummyValue<String>(
+        returnValue: _i7.Future<String>.value(_i19.dummyValue<String>(
           this,
           Invocation.method(
             #read,
@@ -916,7 +942,7 @@ class MockHttpClient extends _i1.Mock implements _i6.Client {
       ) as _i7.Future<String>);
 
   @override
-  _i7.Future<_i19.Uint8List> readBytes(
+  _i7.Future<_i20.Uint8List> readBytes(
     Uri? url, {
     Map<String, String>? headers,
   }) =>
@@ -926,8 +952,8 @@ class MockHttpClient extends _i1.Mock implements _i6.Client {
           [url],
           {#headers: headers},
         ),
-        returnValue: _i7.Future<_i19.Uint8List>.value(_i19.Uint8List(0)),
-      ) as _i7.Future<_i19.Uint8List>);
+        returnValue: _i7.Future<_i20.Uint8List>.value(_i20.Uint8List(0)),
+      ) as _i7.Future<_i20.Uint8List>);
 
   @override
   _i7.Future<_i6.StreamedResponse> send(_i6.BaseRequest? request) =>
