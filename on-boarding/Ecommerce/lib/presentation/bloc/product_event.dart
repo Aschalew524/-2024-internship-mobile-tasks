@@ -23,17 +23,21 @@ class GetProductEvent extends ProductEvent {
 
 class UpdateProductEvent extends ProductEvent {
   final String id;
-
-  UpdateProductEvent(this.id);
+  final ProductEntity productEntity;  
+  const UpdateProductEvent({
+    required this.id,
+    required this.productEntity,
+  });
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [id, productEntity];
 }
+
 
 class AddProductEvent extends ProductEvent {
   final ProductEntity productEntity;
 
-  AddProductEvent(this.productEntity);
+  const AddProductEvent(this.productEntity);
 
   @override
   List<Object> get props => [productEntity];
@@ -42,7 +46,7 @@ class AddProductEvent extends ProductEvent {
 class DeleteProductEvent extends ProductEvent {
   final String id;
 
-  DeleteProductEvent(this.id);
+  const DeleteProductEvent(this.id);
 
   @override
   List<Object> get props => [id];

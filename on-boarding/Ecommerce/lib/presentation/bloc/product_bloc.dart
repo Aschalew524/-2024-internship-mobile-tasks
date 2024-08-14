@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:task_7/domain/entities/product.dart';
+
 import 'package:task_7/domain/usecases/add_product_usecase.dart';
 import 'package:task_7/domain/usecases/delete_product_usecase.dart';
 import 'package:task_7/domain/usecases/get_all_product_usecase.dart';
@@ -51,21 +51,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Future<void> _onUpdateProduct(UpdateProductEvent event, Emitter<ProductState> emit) async {
-    emit(ProductUpdating());
-    final result = await updateProductUseCase.execute(
-      ProductEntity(
-        id: event.id,
-        description: '',  
-        imageUrl: '',
-        name: '',
-        price: 0,  
-      ),
-    );
-    result.fold(
-      (failure) => emit(ProductOperationFailure(failure.toString())),
-      (_) => emit(ProductOperationSuccess()),
-    );
-  }
+  emit(ProductUpdating());
+  final result = await updateProductUseCase.execute(event.productEntity);
+  result.fold(
+    (failure) => emit(ProductOperationFailure(failure.toString())),
+    (_) => emit(ProductOperationSuccess()),
+  );
+}
+
 
   Future<void> _onAddProduct(AddProductEvent event, Emitter<ProductState> emit) async {
     emit(ProductAdding());
