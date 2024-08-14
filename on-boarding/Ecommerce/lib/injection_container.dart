@@ -19,10 +19,11 @@ import 'presentation/bloc/product_bloc.dart';
 
 // sl= service locator
 final  sl= GetIt.instance;
-void init ()async {
+Future<void> init() async {
   // ! features product
 
-//bloc
+
+  //bloc
 
   sl.registerFactory(()=>ProductBloc(
     getAllProductsUsecase: sl(),
