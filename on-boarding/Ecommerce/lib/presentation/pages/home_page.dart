@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../Reusables/product_card.dart';
 import '../bloc/product_bloc.dart';
 import '../bloc/product_event.dart';
-import '../bloc/product_state.dart'; // Adjust import path as needed
+import '../bloc/product_state.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,15 +16,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    //final productBloc = BlocProvider.of<ProductBloc>(context);
-    //productBloc.add(GetAllProductsEvent()); 
-
-    context.read<ProductBloc>().add(GetAllProductsEvent());
-
     super.initState();
-
     
+    // Fetch products when the page is initialized
+    final productBloc = BlocProvider.of<ProductBloc>(context);
+    productBloc.add(GetAllProductsEvent());
   }
+ 
+  
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +42,18 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: BlocConsumer<ProductBloc, ProductState>(
                 listener: (context, state) {
-                  // Handle state changes, e.g., show snackbars
-                  if (state is ProductsLoading){
-                    
+                  if (state is ProductOperationFailure) {
+                    // Display an error message if the operation failed
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.errorMessage)),
+                    );
                   }
                 },
                 builder: (context, state) {
+                  print('Current State: $state'); // Debug print to see the current state
+                  
                   if (state is AllProductsLoaded) {
+                    print('Loaded Products: ${state.products}'); // Debug print to see the loaded products
                     return ListView.builder(
                       itemCount: state.products.length,
                       itemBuilder: (context, index) {
@@ -65,11 +70,13 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     );
+                  } else if (state is ProductsLoading) {
+                    print('Loading Products...'); // Debug print when loading
+                    return Center(child: CircularProgressIndicator());
+                  } else {
+                    print('No products found or error'); // Debug print for other states
+                    return Center(child: Text('No products found'));
                   }
-                  if (state is ProductOperationFailure) {
-                    return Center(child: Text(state.errorMessage));
-                  }
-                  return Center(child: Text('No products available.'));
                 },
               ),
             ),

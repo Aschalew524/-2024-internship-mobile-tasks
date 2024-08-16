@@ -29,48 +29,72 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Future<void> _onGetAllProducts(GetAllProductsEvent event, Emitter<ProductState> emit) async {
-    emit(ProductsLoading());
+    print('bloc stsrt');
+  emit(ProductsLoading());
+  try {
     final result = await getAllProductsUsecase.call();
-    print('sadfgvhbjnm');
+    print('Fetched products: $result'); // Debug print
     result.fold(
       (failure) => emit(ProductOperationFailure(failure.toString())),
-      (products) => emit(AllProductsLoaded(products)),
+      (products) {
+        print('Products loaded: $products'); // Debug print
+        emit(AllProductsLoaded(products));
+      },
     );
+  } catch (e) {
+    emit(ProductOperationFailure(e.toString()));
   }
+}
 
   Future<void> _onGetProduct(GetProductEvent event, Emitter<ProductState> emit) async {
     emit(ProductsLoading());
-    final result = await getProductUseCase.execute(event.id);
-    result.fold(
-      (failure) => emit(ProductOperationFailure(failure.toString())),
-      (product) => emit(ProductLoaded(product)),
-    );
+    try {
+      final result = await getProductUseCase.execute(event.id);
+      result.fold(
+        (failure) => emit(ProductOperationFailure(failure.toString())),
+        (product) => emit(ProductLoaded(product)),
+      );
+    } catch (e) {
+      emit(ProductOperationFailure(e.toString()));
+    }
   }
 
   Future<void> _onUpdateProduct(UpdateProductEvent event, Emitter<ProductState> emit) async {
     emit(ProductUpdating());
-    final result = await updateProductUseCase.execute(event.productEntity);
-    result.fold(
-      (failure) => emit(ProductOperationFailure(failure.toString())),
-      (_) => emit(ProductOperationSuccess()),
-    );
+    try {
+      final result = await updateProductUseCase.execute(event.productEntity);
+      result.fold(
+        (failure) => emit(ProductOperationFailure(failure.toString())),
+        (_) => emit(ProductOperationSuccess()),
+      );
+    } catch (e) {
+      emit(ProductOperationFailure(e.toString()));
+    }
   }
 
   Future<void> _onAddProduct(AddProductEvent event, Emitter<ProductState> emit) async {
     emit(ProductAdding());
-    final result = await insertProductUseCase.call(event.productEntity);
-    result.fold(
-      (failure) => emit(ProductOperationFailure(failure.toString())),
-      (_) => emit(ProductOperationSuccess()),
-    );
+    try {
+      final result = await insertProductUseCase.call(event.productEntity);
+      result.fold(
+        (failure) => emit(ProductOperationFailure(failure.toString())),
+        (_) => emit(ProductOperationSuccess()),
+      );
+    } catch (e) {
+      emit(ProductOperationFailure(e.toString()));
+    }
   }
 
   Future<void> _onDeleteProduct(DeleteProductEvent event, Emitter<ProductState> emit) async {
     emit(ProductDeleting());
-    final result = await deleteProductUseCase.execute(event.id);
-    result.fold(
-      (failure) => emit(ProductOperationFailure(failure.toString())),
-      (_) => emit(ProductOperationSuccess()),
-    );
+    try {
+      final result = await deleteProductUseCase.execute(event.id);
+      result.fold(
+        (failure) => emit(ProductOperationFailure(failure.toString())),
+        (_) => emit(ProductOperationSuccess()),
+      );
+    } catch (e) {
+      emit(ProductOperationFailure(e.toString()));
+    }
   }
 }

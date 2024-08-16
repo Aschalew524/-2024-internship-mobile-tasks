@@ -8,7 +8,7 @@ class GetAllProdcutsUsecase {
 
   final ProductRepository productRepository;
 
-  GetAllProdcutsUsecase({required this.productRepository});
+  GetAllProdcutsUsecase( {required this.productRepository});
 
   Future<Either<Failure, List<ProductEntity>>> call() 
   async {

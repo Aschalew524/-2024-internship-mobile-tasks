@@ -14,7 +14,7 @@ class ProductModel extends ProductEntity {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      price: json['price'],  // Directly assign as int
+      price: json['price'],  
       imageUrl: json['imageUrl'],
     );
   }
@@ -24,7 +24,7 @@ class ProductModel extends ProductEntity {
       'id': id,
       'name': name,
       'description': description,
-      'price': price,  // Directly assign as int
+      'price': price,  
       'imageUrl': imageUrl,
     };
   }
@@ -33,7 +33,7 @@ class ProductModel extends ProductEntity {
         id: id,
         name: name,
         description: description,
-        price: price,  // Directly assign as int
+        price: price,  
         imageUrl: imageUrl,
       );
 
@@ -42,7 +42,7 @@ class ProductModel extends ProductEntity {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      price: json['price'],  // Directly assign as int
+      price: json['price'],  
       imageUrl: json['imageUrl'],
     );
   }

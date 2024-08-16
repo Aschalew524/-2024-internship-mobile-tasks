@@ -77,6 +77,8 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<Either<Failure, List<ProductEntity>>> getAllProducts() async {
     try {
       final productModels = await productRemoteDataSource.getAllProducts();
+      print('repo data');
+      print(productModels);
       return Right(productModels);
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));

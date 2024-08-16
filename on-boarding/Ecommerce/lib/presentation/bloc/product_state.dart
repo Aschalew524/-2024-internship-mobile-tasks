@@ -1,8 +1,4 @@
-// product_state.dart
-
-
 import 'package:equatable/equatable.dart';
-
 import '../../domain/entities/product.dart';
 
 abstract class ProductState extends Equatable {
@@ -16,6 +12,9 @@ class ProductInitial extends ProductState {}
 
 class ProductsLoading extends ProductState {}
 
+// Separate loading states if needed
+class ProductDetailLoading extends ProductState {}
+
 class AllProductsLoaded extends ProductState {
   final List<ProductEntity> products;
 
@@ -24,6 +23,9 @@ class AllProductsLoaded extends ProductState {
   @override
   List<Object> get props => [products];
 }
+
+// Optional: State for when there are no products
+class ProductsEmpty extends ProductState {}
 
 class ProductLoaded extends ProductState {
   final ProductEntity product;
@@ -40,9 +42,15 @@ class ProductUpdating extends ProductState {}
 
 class ProductDeleting extends ProductState {}
 
+// Success states could be more descriptive or carry data if needed
 class ProductOperationSuccess extends ProductState {}
 
-// product_state.dart
+// Optional: More specific success states
+class ProductAddedSuccess extends ProductState {}
+class ProductUpdatedSuccess extends ProductState {}
+class ProductDeletedSuccess extends ProductState {}
+
+// Handling operation failures with detailed error messages
 class ProductOperationFailure extends ProductState {
   final String errorMessage;
 
@@ -51,5 +59,3 @@ class ProductOperationFailure extends ProductState {
   @override
   List<Object> get props => [errorMessage];
 }
-
-

@@ -73,14 +73,23 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   }
 
   @override
-  Future<List<ProductModel>> getAllProducts() async {
-    final response = await client.get(Uri.parse(Urls.getAllProducts()));
-print(response.statusCode);
-    if (response.statusCode == 200) {
-      final List<dynamic> data = json.decode(response.body);
-      return data.map((json) => ProductModel.fromJson(json)).toList();
+Future<List<ProductModel>> getAllProducts() async {
+  final response = await client.get(Uri.parse(Urls.getAllProducts()));
+
+  if (response.statusCode == 200) {
+    print('Response Body: ${response.body}');
+    final data = json.decode(response.body);
+
+    // The response is a Map with a 'data' key containing the list of products
+    if (data is Map<String, dynamic> && data.containsKey('data')) {
+      final productList = data['data'] as List<dynamic>;
+      return productList.map((json) => ProductModel.fromJson(json)).toList();
     } else {
       throw ServerException();
     }
+  } else {
+    throw ServerException();
   }
+}
+
 }
