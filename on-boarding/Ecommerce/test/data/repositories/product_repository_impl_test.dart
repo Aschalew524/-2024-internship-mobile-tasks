@@ -42,7 +42,7 @@ void main() {
   group('Repository Implementation Group', () {
     test('should return ProductEntity when the call to data source is successful', () async {
       // arrange
-      when(mockProductRemoteDataSource.getProductById(testProductId))
+      when(mockProductRemoteDataSource.getProduct(testProductId))
           .thenAnswer((_) async => testProductModel);
 
       // act
@@ -54,7 +54,7 @@ void main() {
 
     test('should return server failure when a call to data source is unsuccessful', () async {
       // arrange
-      when(mockProductRemoteDataSource.getProductById(testProductId))
+      when(mockProductRemoteDataSource.getProduct(testProductId))
           .thenThrow(ServerException());
 
       // act
@@ -66,7 +66,7 @@ void main() {
 
     test('should return connection failure when the device has no internet', () async {
       // arrange
-      when(mockProductRemoteDataSource.getProductById(testProductId))
+      when(mockProductRemoteDataSource.getProduct(testProductId))
           .thenThrow(const SocketException('Failed to connect to the network'));
 
       // act

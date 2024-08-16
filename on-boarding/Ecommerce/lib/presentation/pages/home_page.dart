@@ -1,8 +1,29 @@
 import 'package:flutter/material.dart';
-import '../Reusables/product_card.dart'; // Adjust import path as needed
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../Reusables/product_card.dart';
+import '../bloc/product_bloc.dart';
+import '../bloc/product_event.dart';
+import '../bloc/product_state.dart'; // Adjust import path as needed
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    //final productBloc = BlocProvider.of<ProductBloc>(context);
+    //productBloc.add(GetAllProductsEvent()); 
+
+    context.read<ProductBloc>().add(GetAllProductsEvent());
+
+    super.initState();
+
+    
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +40,37 @@ class HomePage extends StatelessWidget {
             _buildAvailableProductsHeader(context),
             const SizedBox(height: 20.0),
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/detail');
+              child: BlocConsumer<ProductBloc, ProductState>(
+                listener: (context, state) {
+                  // Handle state changes, e.g., show snackbars
+                  if (state is ProductsLoading){
+                    
+                  }
                 },
-                child: ListView(
-                  children: _buildProductList(context),
-                ),
+                builder: (context, state) {
+                  if (state is AllProductsLoaded) {
+                    return ListView.builder(
+                      itemCount: state.products.length,
+                      itemBuilder: (context, index) {
+                        final item = state.products[index];
+                        return ProductCard(
+                          imageUrl: item.imageUrl,
+                          title: item.name,
+                          subtitle: "Men's shoes",
+                          price: item.price.floorToDouble(),
+                          rating: 4.0,
+                          onTap: () {
+                            Navigator.pushNamed(context, '/detail');
+                          },
+                        );
+                      },
+                    );
+                  }
+                  if (state is ProductOperationFailure) {
+                    return Center(child: Text(state.errorMessage));
+                  }
+                  return Center(child: Text('No products available.'));
+                },
               ),
             ),
           ],
@@ -101,40 +146,5 @@ class HomePage extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  List<Widget> _buildProductList(BuildContext context) {
-    return [
-      ProductCard(
-        imageUrl: 'assets/shoes01.jpg',
-        title: 'Derby Leather Shoes',
-        subtitle: "Men's shoes",
-        price: 120,
-        rating: 4.0,
-        onTap: () {
-          Navigator.pushNamed(context, '/detail');
-        },
-      ),
-      ProductCard(
-        imageUrl: 'assets/shoes01.jpg',
-        title: 'Derby Leather Shoes',
-        subtitle: "Men's shoes",
-        price: 120,
-        rating: 4.0,
-        onTap: () {
-          Navigator.pushNamed(context, '/detail');
-        },
-      ),
-      ProductCard(
-        imageUrl: 'assets/shoes01.jpg',
-        title: 'Derby Leather Shoes',
-        subtitle: "Men's shoes",
-        price: 120,
-        rating: 4.0,
-        onTap: () {
-          Navigator.pushNamed(context, '/detail');
-        },
-      ),
-    ];
   }
 }

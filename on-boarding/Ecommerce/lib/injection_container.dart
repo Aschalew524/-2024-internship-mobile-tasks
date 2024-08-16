@@ -1,4 +1,3 @@
- 
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -17,52 +16,47 @@ import 'data/repositories/product_repository_impl.dart';
 import 'domain/repositories/product_repository.dart';
 import 'presentation/bloc/product_bloc.dart';
 
-// sl= service locator
-final  sl= GetIt.instance;
+final sl = GetIt.instance;
+
 Future<void> init() async {
-  // ! features product
+  // Register InputConvertor as a singleton
+  sl.registerLazySingleton(() => InputConvertor());
 
+  // Register ProductBloc without the InputConvertor parameter
+  sl.registerFactory(() => ProductBloc(
+        getAllProductsUsecase: sl(),
+        deleteProductUseCase: sl(),
+        insertProductUseCase: sl(),
+        getProductUseCase: sl(),
+        updateProductUseCase: sl(),
+      ));
 
-  //bloc
+  // Usecases
+  sl.registerLazySingleton(() => DeleteProductUseCase(sl()));
+  sl.registerLazySingleton(() => GetAllProdcutsUsecase(productRepository: sl()));
+  sl.registerLazySingleton(() => GetProductUseCase(sl()));
+  sl.registerLazySingleton(() => InsertProductUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateProductUseCase(sl()));
 
-  sl.registerFactory(()=>ProductBloc(
-    getAllProductsUsecase: sl(),
-    deleteProductUseCase: sl(),
-    insertProductUseCase: sl(),
-    getProductUseCase: sl(),
-    updateProductUseCase: sl(),
-    input_convertor : sl()
-  ),);
+  // Repository
+  sl.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(productRemoteDataSource: sl()),
+  );
 
+  // Data Sources
+  sl.registerLazySingleton<ProductRemoteDataSource>(
+    () => ProductRemoteDataSourceImpl(client: sl()),
+  );
+  sl.registerLazySingleton<ProductLocalDataSource>(
+    () => ProductLocalDataSourceImpl(sharedPreferences: sl()),
+  );
 
-  ////usecases
-  sl.registerFactory(() => DeleteProductUseCase( sl()));
-  sl.registerFactory(() => GetAllProdcutsUsecase(productRepository: sl()));
-  sl.registerFactory(() => GetProductUseCase(sl()));
-  sl.registerFactory(() => InsertProductUseCase(sl()));
-  sl.registerFactory(() => UpdateProductUseCase(sl()));
+  // Core
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
-  
-  // repository
-sl.registerLazySingleton<ProductRepository>(
-    () => ProductRepositoryImpl(productRemoteDataSource: sl(),),);
-
-  // data sources 
-
-  sl.registerLazySingleton<ProductRemoteDataSource>(()=> ProductRemoteDataSourceImpl(client:sl()),);
-  sl.registerLazySingleton<ProductLocalDataSource>(() => ProductLocalDataSourceImpl(sharedPreferences: sl()),);
-
-  /// core 
-  sl.registerLazySingleton(()=> InputConvertor());
-  sl.registerLazySingleton<NetworkInfo>(()=>NetworkInfoImpl(sl()) );
-  
-  
-//// external 
-
- final sharedpreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedpreferences);
+  // External
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton(() => http.Client());
 }
-
-

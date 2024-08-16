@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-
 import 'package:task_7/domain/usecases/add_product_usecase.dart';
 import 'package:task_7/domain/usecases/delete_product_usecase.dart';
 import 'package:task_7/domain/usecases/get_all_product_usecase.dart';
@@ -8,11 +7,8 @@ import 'package:task_7/domain/usecases/update_product_usecase.dart';
 import 'package:task_7/presentation/bloc/product_event.dart';
 import 'package:task_7/presentation/bloc/product_state.dart';
 
-
-
-
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  final GetAllProdcutsUsecase getAllProductsUsecase;  // Corrected name
+  final GetAllProdcutsUsecase getAllProductsUsecase;
   final GetProductUseCase getProductUseCase;
   final InsertProductUseCase insertProductUseCase;
   final UpdateProductUseCase updateProductUseCase;
@@ -23,7 +19,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     required this.getProductUseCase,
     required this.insertProductUseCase,
     required this.updateProductUseCase,
-    required this.deleteProductUseCase, required Object input_convertor,
+    required this.deleteProductUseCase,
   }) : super(ProductInitial()) {
     on<GetAllProductsEvent>(_onGetAllProducts);
     on<GetProductEvent>(_onGetProduct);
@@ -35,6 +31,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   Future<void> _onGetAllProducts(GetAllProductsEvent event, Emitter<ProductState> emit) async {
     emit(ProductsLoading());
     final result = await getAllProductsUsecase.call();
+    print('sadfgvhbjnm');
     result.fold(
       (failure) => emit(ProductOperationFailure(failure.toString())),
       (products) => emit(AllProductsLoaded(products)),
@@ -51,14 +48,13 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Future<void> _onUpdateProduct(UpdateProductEvent event, Emitter<ProductState> emit) async {
-  emit(ProductUpdating());
-  final result = await updateProductUseCase.execute(event.productEntity);
-  result.fold(
-    (failure) => emit(ProductOperationFailure(failure.toString())),
-    (_) => emit(ProductOperationSuccess()),
-  );
-}
-
+    emit(ProductUpdating());
+    final result = await updateProductUseCase.execute(event.productEntity);
+    result.fold(
+      (failure) => emit(ProductOperationFailure(failure.toString())),
+      (_) => emit(ProductOperationSuccess()),
+    );
+  }
 
   Future<void> _onAddProduct(AddProductEvent event, Emitter<ProductState> emit) async {
     emit(ProductAdding());

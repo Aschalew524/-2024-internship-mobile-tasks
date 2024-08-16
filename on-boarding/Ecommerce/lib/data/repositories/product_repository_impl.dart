@@ -40,7 +40,7 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<Either<Failure, ProductEntity>> getProduct(String productId) async {
     try {
-      final productModel = await productRemoteDataSource.getProductById(productId);
+      final productModel = await productRemoteDataSource.getProduct(productId);
       return Right(productModel);
     } on ServerException {
       return const Left(ServerFailure('An error has occurred'));

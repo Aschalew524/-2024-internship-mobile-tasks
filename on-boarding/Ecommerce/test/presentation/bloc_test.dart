@@ -34,7 +34,6 @@ void main() {
         insertProductUseCase: mockInsertProductUseCase,
         updateProductUseCase: mockUpdateProductUseCase,
         deleteProductUseCase: mockDeleteProductUseCase,
-        input_convertor: mockInputConvertor,
       );
     });
 

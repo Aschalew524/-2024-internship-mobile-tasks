@@ -221,7 +221,7 @@ class MockProductRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i7.Future<_i3.ProductModel> getProductById(String? id) =>
+  _i7.Future<_i3.ProductModel> getProduct(String? id) =>
       (super.noSuchMethod(
         Invocation.method(
           #getProductById,
@@ -243,11 +243,7 @@ class MockProductRemoteDataSource extends _i1.Mock
         [productId],
       ));
 
-  @override
-  dynamic getProduct(String? productId) => super.noSuchMethod(Invocation.method(
-        #getProduct,
-        [productId],
-      ));
+
 
   @override
   dynamic insertProduct(_i9.ProductEntity? product) =>

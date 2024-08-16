@@ -31,7 +31,7 @@ void main() {
               readJson('helpers/dummy_data/dummy_product_response.json'), 200));
 
       //act
-      final result = await productRemoteDataSourceImpl.getProductById(testId);
+      final result = await productRemoteDataSourceImpl.getProduct(testId);
 
       //assert
       expect(result, isA<ProductModel>());
@@ -46,7 +46,7 @@ void main() {
         ).thenAnswer((_) async => http.Response('Not found', 404));
 
         //act
-        final result = productRemoteDataSourceImpl.getProductById(testId);
+        final result = productRemoteDataSourceImpl.getProduct(testId);
 
         //assert
         expect(result, throwsA(isA<ServerException>()));
