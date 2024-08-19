@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/error/failure.dart';
-import '../../core/error/exception.dart';
+import '../../../../../../core/error/failure.dart';
+import '../../../../core/error/exception.dart';
 import '../../domain/entities/product.dart';
+import '../../domain/entities/productToAddEntity.dart';
 import '../../domain/repositories/product_repository.dart';
 import '../data_sources/remote_data_source.dart';
 
@@ -50,7 +51,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, void>> insertProduct(ProductEntity product) async {
+  Future<Either<Failure, void>> insertProduct(AddEntity product) async {
     try {
       await productRemoteDataSource.insertProduct(product);
       return const Right(null);

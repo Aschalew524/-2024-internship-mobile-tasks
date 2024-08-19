@@ -1,12 +1,15 @@
+import 'dart:io';
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_7/core/error/failure.dart';
-import 'package:task_7/domain/entities/product.dart';
-import 'package:task_7/presentation/bloc/product_bloc.dart';
-import 'package:task_7/presentation/bloc/product_event.dart';
-import 'package:task_7/presentation/bloc/product_state.dart';
+import 'package:task_7/features/product/domain/entities/product.dart';
+import 'package:task_7/features/product/domain/entities/productToAddEntity.dart';
+import 'package:task_7/features/product/presentation/bloc/product_bloc.dart';
+import 'package:task_7/features/product/presentation/bloc/product_event.dart';
+import 'package:task_7/features/product/presentation/bloc/product_state.dart';
 import '../helpers/test_helper.dart';
 import '../helpers/test_helper.mocks.dart';
 
@@ -57,12 +60,12 @@ void main() {
         );
         return productBloc;
       },
-      act: (bloc) => bloc.add(const AddProductEvent(ProductEntity(
-        id: '1',
+      act: (bloc) => bloc.add( AddProductEvent(AddEntity(
+       
         name: 'shoes',
         description: 'best shoes',
         price: 200,
-        imageUrl: 'http',
+       image: File('mock image'),
       ))),
       expect: () => [
         ProductAdding(),
@@ -79,12 +82,12 @@ void main() {
         );
         return productBloc;
       },
-      act: (bloc) => bloc.add(const AddProductEvent(ProductEntity(
-        id: '1',
+      act: (bloc) => bloc.add( AddProductEvent(AddEntity(
+       
         name: 'shoes',
         description: 'best shoes',
         price: 200,
-        imageUrl: 'http',
+        image: File('mock image'),
       ))),
       expect: () => [
         ProductAdding(),

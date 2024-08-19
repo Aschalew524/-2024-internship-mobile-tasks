@@ -1,5 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../../domain/entities/productToAddEntity.dart';
+import '../bloc/product_bloc.dart';
+import '../bloc/product_event.dart';
 
 class addPage extends StatefulWidget {
   const addPage({super.key});
@@ -8,11 +17,50 @@ class addPage extends StatefulWidget {
   _addPageState createState() => _addPageState();
 }
 class _addPageState extends State<addPage> {
-  final _formKey = GlobalKey<FormState>();
-  String? _name;
-  String? _category;
-  String? _price;
-  String? _description;
+
+  TextEditingController _nameController  = TextEditingController();
+  TextEditingController _priceController  = TextEditingController();
+  TextEditingController _descriptionController  = TextEditingController();
+
+ File? _image;
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final XFile? pickedFile = await _picker.pickImage(source: source);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    }
+  }
+
+ 
+
+
+ 
+
+    void saveProduct(){
+
+      String name  = _nameController.text;
+      double price = double.parse(_priceController.text);
+      String description = _descriptionController.text; 
+      File? image = _image ;
+      if (_nameController.text.isEmpty || _descriptionController.text.isEmpty || image == null || _priceController.text.isEmpty){
+        print("fill all the fields");
+      }
+      else{
+          AddEntity addEntity = new AddEntity(description: description, image: image!, name: name, price: price);
+          context.read<ProductBloc>().add(AddProductEvent(addEntity));
+      }
+      }
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +76,10 @@ class _addPageState extends State<addPage> {
           child: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
+      child:Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Container(
@@ -41,22 +88,49 @@ class _addPageState extends State<addPage> {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: const Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.upload_file),
-                      SizedBox(height: 8.0),
-                      Text("Upload Image"),
-                    ],
+                child:  Center(
+                 child: Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+         GestureDetector(
+                onTap: () => _pickImage(ImageSource.gallery),
+                child: Container(
+                  height: 170,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
+                  child: _image == null
+                      ? const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.upload_file),
+                            SizedBox(height: 8.0),
+                            Text("Upload Image"),
+                          ],
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child: Image.file(
+                            _image!,
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
+                          ),
+                        ),
+                ),
+              )
+                 ],
+),
+
                 ),
               ),
               const SizedBox(height: 16.0),
               // Name
               const Text('Name'),
               const SizedBox(height: 8.0),
-              TextFormField(
+              TextField(
+                controller: _nameController ,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[300],
@@ -68,9 +142,11 @@ class _addPageState extends State<addPage> {
               ),
               const SizedBox(height: 16.0),
               // Category
-              const Text('Category'),
+              const Text('description'),
               const SizedBox(height: 8.0),
-              TextFormField(
+              TextField(
+                controller: _descriptionController ,
+
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[300],
@@ -84,7 +160,8 @@ class _addPageState extends State<addPage> {
               // Price
               const Text('Price'),
               const SizedBox(height: 8.0),
-              TextFormField(
+              TextField(
+                controller: _priceController,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.grey[300],
@@ -98,7 +175,7 @@ class _addPageState extends State<addPage> {
               // Description
               const Text('Description'),
               const SizedBox(height: 8.0),
-              TextFormField(
+              TextField(
                 maxLines: 3,
                 decoration: InputDecoration(
                   filled: true,
@@ -119,22 +196,7 @@ class _addPageState extends State<addPage> {
                 child: Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_formKey.currentState?.validate() ?? false) {
-                        _formKey.currentState?.save();
-                        // Save the form data and perform any additional actions
-                        if (kDebugMode) {
-                          print('Name: $_name');
-                        }
-                        if (kDebugMode) {
-                          print('Category: $_category');
-                        }
-                        if (kDebugMode) {
-                          print('Price: $_price');
-                        }
-                        if (kDebugMode) {
-                          print('Description: $_description');
-                        }
-                      }
+                     saveProduct();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.transparent,
@@ -178,8 +240,12 @@ class _addPageState extends State<addPage> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+       ) ),
+      )
+      ;
+      
+      
+  
+    
   }
 }

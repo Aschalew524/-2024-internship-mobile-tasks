@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
-import '../../../../core/constants/constants.dart';
-import '../../../../core/error/exception.dart';
+import '../../../../../../core/constants/constants.dart';
+import '../../../../../../core/error/exception.dart';
 import '../../domain/entities/product.dart';
+import '../../domain/entities/productToAddEntity.dart';
 import '../models/product_model.dart';
+import 'package:mime/mime.dart';
 
 abstract class ProductRemoteDataSource {
  // Future<ProductModel> getProductById(String id);
@@ -14,7 +17,7 @@ abstract class ProductRemoteDataSource {
 
   getProduct(String productId) {}
 
-  insertProduct(ProductEntity product) {}
+  insertProduct(AddEntity product) {}
 
   updateProduct(ProductEntity product) {}
 
@@ -47,8 +50,8 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
   }
 
   @override
-  Future<void> insertProduct(ProductEntity product) async {
-    final response = await client.post(
+  Future<void> insertProduct(AddEntity product) async {
+    /* final response = await client.post(
       Uri.parse(Urls.insertProduct()),
       headers: {'Content-Type': 'application/json'},
       body: json.encode((product as ProductModel).toJson()),
@@ -56,7 +59,29 @@ class ProductRemoteDataSourceImpl extends ProductRemoteDataSource {
 
     if (response.statusCode != 201) {
       throw ServerException();
-    }
+    } */
+
+        print(product);
+
+      var request =  http.MultipartRequest('POST', Uri.parse(Urls.insertProduct()));
+      request.fields['name'] = product.name;
+      request.fields['price'] = product.price.toString();
+      request.fields['description'] = product.description;
+      request.files.add(await http.MultipartFile.fromPath(
+        'image', 
+        product.image.path,
+        contentType: MediaType('image','jpg')));
+
+        final response = await request.send();
+        print(response.statusCode);
+        if (response.statusCode == 201){
+          print('product created');
+
+        }
+        else{
+          print('product not created');
+        }
+
   }
 
   @override

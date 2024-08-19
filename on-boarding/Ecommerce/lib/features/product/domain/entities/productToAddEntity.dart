@@ -1,25 +1,25 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
-class ProductEntity extends Equatable {
-  final String id;
+class AddEntity extends Equatable {
   final String name;
   final String description;
-  final String imageUrl;
+  final File image;
   final double price;
 
-  const ProductEntity(
-      {required this.id,
+  const AddEntity(
+      {
       required this.description,
-      required this.imageUrl,
+      required this.image,
       required this.name,
       required this.price});
 
   @override
   List<Object?> get props => [
-        id,
         name,
         description,
-        imageUrl,
+        image,
         price,
       ];
-}
+} 

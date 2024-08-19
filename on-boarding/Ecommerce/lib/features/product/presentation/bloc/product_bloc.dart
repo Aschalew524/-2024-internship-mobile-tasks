@@ -1,11 +1,12 @@
 import 'package:bloc/bloc.dart';
-import 'package:task_7/domain/usecases/add_product_usecase.dart';
-import 'package:task_7/domain/usecases/delete_product_usecase.dart';
-import 'package:task_7/domain/usecases/get_all_product_usecase.dart';
-import 'package:task_7/domain/usecases/get_product_usecase.dart';
-import 'package:task_7/domain/usecases/update_product_usecase.dart';
-import 'package:task_7/presentation/bloc/product_event.dart';
-import 'package:task_7/presentation/bloc/product_state.dart';
+
+import '../../domain/usecases/add_product_usecase.dart';
+import '../../domain/usecases/delete_product_usecase.dart';
+import '../../domain/usecases/get_all_product_usecase.dart';
+import '../../domain/usecases/get_product_usecase.dart';
+import '../../domain/usecases/update_product_usecase.dart';
+import 'product_event.dart';
+import 'product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetAllProdcutsUsecase getAllProductsUsecase;

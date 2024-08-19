@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 import 'package:task_7/core/constants/constants.dart';
 import 'package:task_7/core/error/exception.dart';
-import 'package:task_7/data/data_sources/remote_data_source.dart';
-import 'package:task_7/data/models/product_model.dart';
+import 'package:task_7/features/product/data/data_sources/remote_data_source.dart';
+import 'package:task_7/features/product/data/models/product_model.dart';
 
 import '../../helpers/json_reader.dart';
 import '../../helpers/test_helper.mocks.dart';

@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 
-import '../../core/error/failure.dart';
+import '../../../../core/error/failure.dart';
 import '../entities/product.dart';
+import '../entities/productToAddEntity.dart';
 import '../repositories/product_repository.dart';
 
 class InsertProductUseCase {
@@ -9,7 +10,7 @@ class InsertProductUseCase {
 
   InsertProductUseCase(this.productRepository);
 
-  Future<Either<Failure, void>> call(ProductEntity product) {
+  Future<Either<Failure, void>> call(AddEntity product) {
     return productRepository.insertProduct(product);
   }
 }

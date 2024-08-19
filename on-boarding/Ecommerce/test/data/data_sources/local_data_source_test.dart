@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:task_7/core/error/exception.dart';
-import 'package:task_7/data/data_sources/local_data_source.dart';
-import 'package:task_7/data/models/product_model.dart';
+import 'package:task_7/features/product/data/data_sources/local_data_source.dart';
+import 'package:task_7/features/product/data/models/product_model.dart';
 import '../../helpers/test_helper.mocks.dart';
 
 void main() {

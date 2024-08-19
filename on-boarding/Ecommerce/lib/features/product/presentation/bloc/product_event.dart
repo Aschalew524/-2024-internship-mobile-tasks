@@ -2,6 +2,7 @@
 import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/product.dart';
+import '../../domain/entities/productToAddEntity.dart';
 
 sealed class ProductEvent extends Equatable {
   const ProductEvent();
@@ -35,7 +36,7 @@ class UpdateProductEvent extends ProductEvent {
 
 
 class AddProductEvent extends ProductEvent {
-  final ProductEntity productEntity;
+  final AddEntity productEntity;
 
   const AddProductEvent(this.productEntity);
 

@@ -5,13 +5,13 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_7/core/error/failure.dart';
 import 'package:task_7/core/util/input_convertor.dart';
-import 'package:task_7/data/data_sources/remote_data_source.dart';
-import 'package:task_7/domain/repositories/product_repository.dart';
-import 'package:task_7/domain/usecases/add_product_usecase.dart';
-import 'package:task_7/domain/usecases/delete_product_usecase.dart';
-import 'package:task_7/domain/usecases/get_all_product_usecase.dart';
-import 'package:task_7/domain/usecases/get_product_usecase.dart';
-import 'package:task_7/domain/usecases/update_product_usecase.dart';
+import 'package:task_7/features/product/data/data_sources/remote_data_source.dart';
+import 'package:task_7/features/product/domain/repositories/product_repository.dart';
+import 'package:task_7/features/product/domain/usecases/add_product_usecase.dart';
+import 'package:task_7/features/product/domain/usecases/delete_product_usecase.dart';
+import 'package:task_7/features/product/domain/usecases/get_all_product_usecase.dart';
+import 'package:task_7/features/product/domain/usecases/get_product_usecase.dart';
+import 'package:task_7/features/product/domain/usecases/update_product_usecase.dart';
 
 @GenerateMocks([
   ProductRepository,

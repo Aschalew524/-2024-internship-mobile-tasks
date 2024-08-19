@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../Reusables/product_card.dart';
 import '../bloc/product_bloc.dart';
 import '../bloc/product_event.dart';
@@ -17,13 +16,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    
+
     // Fetch products when the page is initialized
     final productBloc = BlocProvider.of<ProductBloc>(context);
     productBloc.add(GetAllProductsEvent());
   }
- 
-  
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +36,7 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20.0),
             _buildAvailableProductsHeader(context),
             const SizedBox(height: 20.0),
+            
             Expanded(
               child: BlocConsumer<ProductBloc, ProductState>(
                 listener: (context, state) {
@@ -51,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 builder: (context, state) {
                   print('Current State: $state'); // Debug print to see the current state
-                  
+
                   if (state is AllProductsLoaded) {
                     print('Loaded Products: ${state.products}'); // Debug print to see the loaded products
                     return ListView.builder(
@@ -65,7 +63,11 @@ class _HomePageState extends State<HomePage> {
                           price: item.price.floorToDouble(),
                           rating: 4.0,
                           onTap: () {
-                            Navigator.pushNamed(context, '/detail');
+                            Navigator.pushNamed(
+                              context,
+                              '/detail',
+                              arguments: item,  // Pass the product item as an argument
+                            );
                           },
                         );
                       },
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () { 
           Navigator.popAndPushNamed(context, '/add');
         },
         child: const Icon(Icons.add),
